@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASHI | Orpheus Music Library</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+
+  <!-- Google Fonts — Fraunces (chunky retro serif) + Courier Prime (warm typewriter mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+  <header class="site-header sticky-top">
+    <div class="container-fluid px-4">
+      <div class="header-inner d-flex align-items-center justify-content-between">
+
+        <!-- Left: Nav links -->
+        <nav class="header-nav d-none d-md-flex gap-4">
+          <a href="#products" class="nav-link-item">Catalog</a>
+          <a href="#composer" class="nav-link-item">Composer</a>
+        </nav>
+
+        <!-- Center: Logo — Fraunces gives the chunky retro weight -->
+        <div class="logo">ASHI</div>
+
+        <!-- Right: Cart + Login -->
+        <div class="header-actions d-flex align-items-center gap-3">
+          <button class="btn-icon" aria-label="Cart" id="cartBtn">
+            <i class="ph ph-shopping-cart-simple"></i>
+            <span class="cart-badge" id="cartBadge">0</span>
+          </button>
+          <button class="btn-pill">Login</button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero-section" id="hero">
+    <div class="hero-grain-bg"></div>
+    <div class="container-fluid px-4">
+      <div class="row align-items-center g-5">
+
+        <!-- Left: Title -->
+        <div class="col-12 col-md-7">
+          <h1 class="hero-title"><span class="hero-title-accent">Orpheus</span><br/>Music Library</h1>
+        </div>
+
+        <!-- Right: Featured product -->
+        <div class="col-12 col-md-5">
+          <article class="hero-featured-card">
+            <div class="hero-featured-thumb-wrap">
+              <img
+                src="https://picsum.photos/seed/midnight/600/400?grayscale"
+                alt="MIDNIGHT_DRILL"
+                class="hero-featured-thumb"
+              />
+              <span class="product-type-badge badge--beat">Beats</span>
+              <span class="product-bpm">140 BPM</span>
+              <div class="play-overlay">
+                <button class="play-btn" aria-label="Preview"><i class="ph ph-play"></i></button>
+              </div>
+            </div>
+            <div class="hero-featured-body">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="hero-featured-label">Featured Track</span>
+                <span class="hero-featured-price">$29</span>
+              </div>
+              <p class="hero-featured-title">MIDNIGHT_DRILL</p>
+              <button class="product-card-btn mt-2" id="heroAddBtn" data-id="1">+ Add to Cart</button>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FILTER BAR ═══════════════════════════ -->
+  <div class="filter-bar">
+    <div class="container-fluid px-4">
+      <div class="filter-inner d-flex align-items-center gap-3 flex-wrap">
+        <span class="filter-label">Filter:</span>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="beats">Beats</button>
+        <button class="filter-btn" data-filter="samples">Samples</button>
+        <button class="filter-btn" data-filter="loops">Loops</button>
+        <button class="filter-btn" data-filter="kits">Drum Kits</button>
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <span class="filter-label">Sort:</span>
+          <select class="filter-select">
+            <option>Newest</option>
+            <option>Price ↑</option>
+            <option>Price ↓</option>
+            <option>BPM ↑</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ PRODUCT WALL ═══════════════════════════ -->
+  <section class="product-section" id="products">
+    <div class="container-fluid px-4">
+      <div class="section-header d-flex align-items-center justify-content-between mb-4">
+        <div class="section-title-group">
+          <span class="section-eyebrow">— Catalog</span>
+          <h2 class="section-title">Latest Drops</h2>
+        </div>
+        <span class="product-count" id="productCount">16 Tracks</span>
+      </div>
+
+      <div class="row g-3" id="productGrid">
+        <!-- Product cards injected by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ WAVEFORM DIVIDER ═══════════════════════════ -->
+  <div class="waveform-divider" aria-hidden="true">
+    <div class="container-fluid px-4">
+      <div class="waveform-inner" id="waveformBars"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ COMPOSER SECTION ═══════════════════════════ -->
+  <section class="composer-section composer-section--analog" id="composer">
+    <div class="composer-topo-bg"></div>
+    <div class="container-fluid px-4 position-relative">
+      <div class="row align-items-center g-5">
+
+        <!-- Left: Profile image -->
+        <div class="col-12 col-md-4 col-lg-3">
+          <div class="composer-img-wrap">
+            <img
+              src="https://picsum.photos/seed/ashi/400/400?grayscale"
+              alt="Ashi portrait"
+              class="composer-img"
+            />
+            <div class="composer-img-overlay">
+              <span class="composer-img-tag">Prod. 001</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: About content -->
+        <div class="col-12 col-md-8 col-lg-9">
+          <span class="section-eyebrow composer-eyebrow">— Identity</span>
+          <h2 class="section-title composer-heading mb-4">About Ashi</h2>
+
+          <p class="composer-bio">
+            Underground architect of percussive landscapes and harmonic tension. Crafting
+            sonic frameworks that exist in the space between industrial minimalism and
+            raw emotional density. Every sequence is engineered, every sample is chosen
+            with surgical precision.
+          </p>
+
+          <!-- Data sheet specs — typewriter feel -->
+          <div class="spec-sheet mt-4">
+            <div class="row g-0">
+              <div class="col-12 col-sm-6">
+                <div class="spec-row"><span class="spec-key">DAW</span><span class="spec-val">Ableton 12</span></div>
+                <div class="spec-row"><span class="spec-key">Sample Rate</span><span class="spec-val">44.1kHz / 48kHz</span></div>
+                <div class="spec-row"><span class="spec-key">Bit Depth</span><span class="spec-val">24-bit</span></div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="spec-row"><span class="spec-key">Genre Tags</span><span class="spec-val">Trap / Ambient / Drill</span></div>
+                <div class="spec-row"><span class="spec-key">Packs Total</span><span class="spec-val">44</span></div>
+                <div class="spec-row"><span class="spec-key">License</span><span class="spec-val">Excl. + Non-Excl.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer-actions mt-4 d-flex gap-3 flex-wrap">
+            <button class="btn-pill btn-pill--filled">View All Packs</button>
+            <button class="btn-pill">Contact Me</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container-fluid px-4">
+      <div class="footer-inner d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <span class="footer-copy">© 2026 ASHI — All rights reserved.</span>
+        <nav class="footer-nav d-flex gap-4">
+          <a href="#" class="footer-link">Terms</a>
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Contact</a>
+          <a href="#" class="footer-link">Imprint</a>
+        </nav>
+      </div>
+      <div class="footer-bottom d-flex align-items-center justify-content-between flex-wrap gap-2 mt-2">
+        <span class="footer-sub">Audio formats: WAV · MP3 · Stems</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
