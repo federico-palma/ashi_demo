@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEMOS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #161616;
+      color: #ffffff;
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+    }
+
+    .label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #555;
+    }
+
+    .demo-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .demo-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .demo-btn__box {
+      width: 140px;
+      height: 140px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: #888;
+      transition: all 0.1s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo-btn__box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out;
+    }
+
+    /* Demo 1 Dark — orange accent */
+    .demo-btn--d1 .demo-btn__box { border-color: #F65921; color: #ffffff; }
+    .demo-btn--d1 .demo-btn__box::before { background: radial-gradient(circle at 50% 50%, rgba(246,89,33,0.1), transparent 70%); opacity: 1; }
+    .demo-btn--d1 .demo-btn__box:hover { background: #F65921; color: #161616; }
+    .demo-btn--d1 .demo-btn__box:hover::before { opacity: 0; }
+
+    /* Demo 2 Light — blue accent */
+    .demo-btn--d2 .demo-btn__box { border-color: #0055FF; color: #ffffff; }
+    .demo-btn--d2 .demo-btn__box::before { background: radial-gradient(circle at 50% 50%, rgba(0,85,255,0.1), transparent 70%); opacity: 1; }
+    .demo-btn--d2 .demo-btn__box:hover { background: #0055FF; color: #161616; }
+    .demo-btn--d2 .demo-btn__box:hover::before { opacity: 0; }
+
+    /* Demo 3 Analog — warm terracotta accent */
+    .demo-btn--d3 .demo-btn__box { border-color: #E2725B; color: #ffffff; }
+    .demo-btn--d3 .demo-btn__box::before { background: radial-gradient(circle at 50% 50%, rgba(226,114,91,0.12), transparent 70%); opacity: 1; }
+    .demo-btn--d3 .demo-btn__box:hover { background: #E2725B; color: #161616; }
+    .demo-btn--d3 .demo-btn__box:hover::before { opacity: 0; }
+
+.demo-btn__label {
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      color: #555;
+    }
+    .demo-btn--d1 .demo-btn__label,
+    .demo-btn--d2 .demo-btn__label,
+    .demo-btn--d3 .demo-btn__label { color: #888; }
+  </style>
+</head>
+<body>
+
+  <span class="label">// SELECT DEMO</span>
+
+  <div class="demo-row">
+
+    <a href="demo_1/index.html" class="demo-btn demo-btn--d1">
+      <div class="demo-btn__box">DEMO_1</div>
+      <span class="demo-btn__label">DEMO 1 — DARK</span>
+    </a>
+
+    <a href="demo_2/index.html" class="demo-btn demo-btn--d2">
+      <div class="demo-btn__box">DEMO_2</div>
+      <span class="demo-btn__label">DEMO 1 — LIGHT</span>
+    </a>
+
+    <a href="demo_3/index.html" class="demo-btn demo-btn--d3">
+      <div class="demo-btn__box">DEMO_3</div>
+      <span class="demo-btn__label">DEMO 2 — ANALOG</span>
+    </a>
+
+  </div>
+
+</body>
+</html>

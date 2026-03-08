@@ -1,0 +1,921 @@
+/* ══════════════════════════════════════════════════════════════
+   ASHI — DEMO 3 STYLE SYSTEM
+   "Mellow, Warm, Analog & Lo-Fi"
+   Aesthetic reference: 1970s recording studio, Moog synthesizer,
+   Rhodes piano, worn vinyl sleeves, sampler pads, cassette tape
+   tracklists — mid-tones only, never pure light or dark.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Custom Properties ──────────────────────────────────────────
+   WHERE DEMO 1/2 used stark #161616 black and #FFFFFF white,
+   we now live entirely in the warm mid-tone range.
+   No pure blacks, no pure whites.
+   ──────────────────────────────────────────────────────────────*/
+:root {
+  /* — Background: cardboard / taupe — like aged studio foam tiles */
+  --bg:           #D8CFC4;
+  --bg-raised:    #CFC5B9;   /* slightly deeper, like shadow on felt */
+
+  /* — Surfaces: creamy parchment — like vintage tracklist paper */
+  --surface:      #F5EFE6;
+  --surface-2:    #EDE5D8;   /* a touch warmer than surface */
+
+  /* — Borders replaced by warmth: no stark lines, just tonal shifts */
+  --border:       rgba(44, 37, 31, 0.12);
+  --border-warm:  rgba(44, 37, 31, 0.2);
+
+  /* — Typography: espresso brown, not black — like old ink on paper */
+  --ink:          #2C251F;
+  --ink-muted:    #7A6A5E;   /* faded-ink muted text */
+  /* --ink-faint:    #ADA096;*/
+  --ink-faint:    #000000;
+
+  /* — Accents: muted, retro analog palette —
+     WHERE DEMO 1 used orange #F65921 and DEMO 2 used blue #0055FF,
+     we now use warm ochre, terracotta, and moss. No saturated tech colors. */
+  --ochre:        #D4A373;   /* faded mustard — VU meter amber */
+  --terracotta:   #E2725B;   /* dusty terracotta — worn MPC pad */
+  --moss:         #6B705C;   /* faded moss green — vintage patchwork */
+
+  /* Primary accent defaults to terracotta (most distinctive) */
+  --accent:       #E2725B;
+
+  /* — Composer section: slightly deeper, organic warm brown */
+  --analog-bg:    #BFB4A8;   /* like a worn corkboard or studio wall */
+  --analog-border: rgba(44, 37, 31, 0.15);
+
+  /* — WHERE DEMO 1/2 used Space Mono / Inter (hard, geometric),
+     we now use organic, warm typefaces */
+  --font-serif: 'Fraunces', 'Georgia', serif;        /* headings — chunky retro */
+  --font-mono:  'Courier Prime', 'Courier New', monospace; /* UI — typewriter warmth */
+
+  /* — Shape: WHERE DEMO 1/2 used radius-sm: 4px (sharp, mechanical),
+     we now use soft, organic curves */
+  --radius-sm:    12px;      /* cards — like a worn vinyl sleeve corner */
+  --radius-md:    16px;      /* larger containers */
+  --radius-pill:  50px;      /* buttons — like soft rubber MPC pads */
+
+  /* — Motion: WHERE DEMO 1/2 used 0.1s (snappy, mechanical),
+     we now use 0.3s ease (mellow, like a spring-loaded key) */
+  --transition:   0.3s ease;
+
+  /* — Shadows: no borders, just warm, soft physical depth */
+  --shadow-sm:    0 2px 8px  rgba(44, 37, 31, 0.08);
+  --shadow-md:    0 4px 14px rgba(44, 37, 31, 0.1);
+  --shadow-lg:    0 8px 28px rgba(44, 37, 31, 0.14);
+  --shadow-lift:  0 10px 32px rgba(44, 37, 31, 0.18); /* hover "lift" */
+
+  --header-h: 60px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);   /* typewriter feel throughout */
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+/* ══════════════════════════════════════════════════════════════
+   HEADER
+   WHERE DEMO 1: stark border-bottom, rigid.
+   HERE: gradient shadow dissolves into background — feels like
+   a cardboard panel slightly raised off the surface.
+   ══════════════════════════════════════════════════════════════ */
+.site-header {
+  height: var(--header-h);
+  background-color: var(--surface);
+  /* Soft gradient shadow instead of hard border */
+  box-shadow: 0 2px 16px rgba(44, 37, 31, 0.1);
+  z-index: 1000;
+}
+
+.header-inner { height: var(--header-h); }
+
+/* Logo — Fraunces gives the chunky, warm retro weight */
+.logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;          /* Fraunces italic adds vintage flair */
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  user-select: none;
+}
+
+/* Header nav — softer, lowercase feels more human */
+.nav-link-item {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  transition: color var(--transition);
+}
+.nav-link-item:hover { color: var(--ink); }
+
+/* Icon button — soft, padded, like a rubber studio button */
+.btn-icon {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+.btn-icon:hover {
+  background: var(--ochre);
+  color: var(--surface);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pill button — creamy, padded, like a soft rubber MPC key */
+.btn-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 8px 22px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--surface-2);
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.btn-pill:hover {
+  background: var(--ochre);
+  color: var(--surface);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.btn-pill--filled {
+  background: var(--terracotta);
+  color: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.btn-pill--filled:hover {
+  background: var(--ink);
+  color: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO
+   WHERE DEMO 1: rigid dot-matrix grid — cold, digital.
+   HERE: warm radial gradient "spotlight" — like a single lamp
+   over a studio console. Grain texture mimics aged film stock.
+   ══════════════════════════════════════════════════════════════ */
+.hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 80px 0 80px;
+  /* Soft bottom dissolve instead of hard border */
+  box-shadow: 0 4px 24px rgba(44, 37, 31, 0.06);
+}
+
+/* Warm spotlight radial gradient — studio lamp over console */
+.hero-grain-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 35% 50%, rgba(212,163,115,0.25), transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(226,114,91,0.1),  transparent 60%);
+  pointer-events: none;
+}
+
+/* Subtle grain overlay — aged film stock texture via SVG filter trick */
+.hero-grain-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+}
+
+/* Hero title — Fraunces serif gives warm, editorial gravitas */
+.hero-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  /* Subtle text-shadow lifts it off the textured background */
+  text-shadow: 0 2px 12px rgba(44, 37, 31, 0.12);
+  text-transform: none;   /* no shouting — organic, warm */
+}
+
+.hero-title-accent { color: var(--terracotta); }
+
+/* ── Hero Featured Card ── */
+.hero-featured-card {
+  position: relative;
+  z-index: 2;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-width: 420px;
+  /* Warm drop shadow — feels like a physical vinyl sleeve on a desk */
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.hero-featured-card:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-4px);
+}
+
+.hero-featured-thumb-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 75%;
+  overflow: hidden;
+  background: var(--surface-2);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.hero-featured-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Warm vintage filter — like aged photographic paper */
+  filter: sepia(25%) contrast(90%) brightness(97%);
+  transition: transform 0.4s ease, filter var(--transition);
+}
+.hero-featured-card:hover .hero-featured-thumb {
+  transform: scale(1.04);
+  filter: sepia(10%) contrast(95%) brightness(100%);
+}
+
+.hero-featured-thumb-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 24px rgba(44, 37, 31, 0.12);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+.hero-featured-card:hover .play-overlay { opacity: 1; }
+
+.hero-featured-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hero-featured-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+}
+
+.hero-featured-price {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.hero-featured-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FILTER BAR
+   WHERE DEMO 1: stark sticky bar with hard border.
+   HERE: soft, cream panel with warm shadow — like a physical
+   row of rubber-pad buttons on a sampler.
+   ══════════════════════════════════════════════════════════════ */
+.filter-bar {
+  background: var(--surface);
+  padding: 12px 0;
+  position: sticky;
+  top: var(--header-h);
+  z-index: 900;
+  box-shadow: 0 3px 14px rgba(44, 37, 31, 0.07);
+}
+
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  font-style: italic;
+}
+
+/* Filter buttons — soft padded rubber pads */
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.filter-btn:hover {
+  background: var(--ochre);
+  color: var(--surface);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+/* Active — warm terracotta press state */
+.filter-btn.active {
+  background: var(--terracotta);
+  color: var(--surface);
+  box-shadow: inset 0 2px 6px rgba(44, 37, 31, 0.15);
+  transform: translateY(0);
+}
+
+.filter-select {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.filter-select:focus { box-shadow: var(--shadow-md); }
+
+/* ══════════════════════════════════════════════════════════════
+   PRODUCT SECTION
+   ══════════════════════════════════════════════════════════════ */
+.product-section { padding: 52px 0 72px; }
+
+/* Section typography — serif heading, typewriter eyebrow */
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  display: block;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.product-count {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ── Product Card — like a physical vinyl sleeve or cassette box ── */
+.product-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  /* Analog lift — no harsh border flip, just depth change */
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Thumbnail — like looking at a vinyl label through a sleeve window */
+.product-thumb-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  background: var(--surface-2);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.product-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Warm vintage photo filter — like aged Kodachrome stock */
+  filter: sepia(20%) contrast(90%) brightness(97%);
+  transition: filter var(--transition), transform 0.4s ease;
+}
+.product-card:hover .product-thumb {
+  filter: sepia(8%) contrast(95%) brightness(100%);
+  transform: scale(1.04);
+}
+
+/* Soft vignette inner shadow — like a vinyl sleeve cutout */
+.product-thumb-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 20px rgba(44, 37, 31, 0.1);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* Play overlay — soft terracotta circle, eases in gently */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Warm parchment scrim instead of hard black */
+  background: rgba(245, 239, 230, 0.55);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity var(--transition); /* 0.3s — mellow ease in */
+  z-index: 2;
+}
+.product-card:hover .play-overlay { opacity: 1; }
+
+.play-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  /* Terracotta circle — worn MPC pad aesthetic */
+  background: var(--terracotta);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--surface);
+  box-shadow: 0 4px 16px rgba(226, 114, 91, 0.4);
+  transition: all var(--transition);
+}
+.play-btn:hover {
+  background: var(--ink);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.08);
+}
+
+/* Card type badge — muted, parchment labels */
+.product-type-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  z-index: 3;
+  font-style: italic;
+}
+/* WHERE DEMO 1 used electric neon badge colors,
+   here we use muted, aged analog palette */
+.badge--beat    { background: rgba(212,163,115,0.3); color: #8B5E2A; border: 1px solid rgba(212,163,115,0.5); }
+.badge--sample  { background: rgba(107,112,92,0.2);  color: var(--moss); border: 1px solid rgba(107,112,92,0.4); }
+.badge--loop    { background: rgba(226,114,91,0.2);  color: #9E3A24; border: 1px solid rgba(226,114,91,0.35); }
+.badge--kit     { background: rgba(44,37,31,0.1);    color: var(--ink-muted); border: 1px solid rgba(44,37,31,0.2); }
+
+/* BPM pill */
+.product-bpm {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  font-style: italic;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 239, 230, 0.75);
+  color: var(--ink-muted);
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
+/* Card body — tracklist-like, typewriter aesthetic */
+.product-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.product-title {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-key {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.product-price {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Add to cart button — warm, padded rubber key */
+.product-card-btn {
+  width: 100%;
+  padding: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  margin-top: 6px;
+}
+.product-card-btn:hover {
+  background: var(--terracotta);
+  color: var(--surface);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WAVEFORM DIVIDER
+   WHERE DEMO 1: cold electric bars.
+   HERE: warm ochre pulse — like a VU meter needle on a tape deck.
+   ══════════════════════════════════════════════════════════════ */
+.waveform-divider {
+  padding: 24px 0;
+  background: var(--surface);
+  box-shadow: 0 2px 16px rgba(44, 37, 31, 0.07),
+              0 -2px 16px rgba(44, 37, 31, 0.07);
+  overflow: hidden;
+}
+
+.waveform-inner {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 44px;
+}
+
+.waveform-bar {
+  flex: 1;
+  background: rgba(212, 163, 115, 0.25); /* muted ochre base */
+  border-radius: 6px;                    /* softer bar ends */
+  transition: background 0.4s ease;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COMPOSER SECTION
+   WHERE DEMO 1: light gray with hash lines (industrial).
+   HERE: deeper warm taupe with faint topographic wave lines —
+   like a vintage acoustic treatment wall or corkboard.
+   ══════════════════════════════════════════════════════════════ */
+.composer-section {
+  position: relative;
+  padding: 80px 0;
+  overflow: hidden;
+  /* Soft top and bottom shadows instead of hard borders */
+  box-shadow: 0 -4px 24px rgba(44, 37, 31, 0.08),
+               0  4px 24px rgba(44, 37, 31, 0.08);
+}
+
+.composer-section--analog {
+  background-color: var(--analog-bg); /* deeper warm corkboard tone */
+}
+
+/* Topographic wave lines — organic, like soundwave cross-sections
+   or vintage contour maps from a musician's atlas */
+.composer-topo-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-radial-gradient(
+      ellipse at 20% 40%,
+      transparent 0px, transparent 24px,
+      rgba(44, 37, 31, 0.04) 24px, rgba(44, 37, 31, 0.04) 25px
+    ),
+    repeating-radial-gradient(
+      ellipse at 75% 65%,
+      transparent 0px, transparent 30px,
+      rgba(44, 37, 31, 0.03) 30px, rgba(44, 37, 31, 0.03) 31px
+    );
+  pointer-events: none;
+}
+
+/* Composer image — warm oval, heavily rounded, vintage photo feel */
+.composer-img-wrap {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 280px;
+}
+
+.composer-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  /* Oval shape — like a vintage locket or studio portrait */
+  border-radius: 50% 50% 50% 50% / 48% 48% 52% 52%;
+  /* Warm vintage photographic filter — faded Kodak stock */
+  filter: sepia(35%) contrast(88%) brightness(95%) saturate(80%);
+  box-shadow: var(--shadow-lg);
+  transition: filter 0.4s ease, box-shadow var(--transition);
+}
+.composer-img:hover {
+  filter: sepia(15%) contrast(92%) brightness(98%) saturate(90%);
+  box-shadow: var(--shadow-lift);
+}
+
+.composer-img-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.composer-img-tag {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 239, 230, 0.82);
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+
+/* Composer bio — readable, organic */
+.composer-bio {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: var(--ink-muted);
+  max-width: 560px;
+}
+
+/* Eyebrow & heading in analog section */
+.composer-eyebrow { color: var(--ink-faint) !important; }
+.composer-heading {
+  font-family: var(--font-serif) !important;
+  color: var(--ink) !important;
+  font-size: 2rem !important;
+}
+
+/* Spec sheet — typewriter on vintage paper
+   WHERE DEMO 1 used cold monospace with harsh grid lines,
+   HERE we use warm cream + soft shadows for each row */
+.spec-sheet {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.spec-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(44, 37, 31, 0.06);
+  gap: 12px;
+}
+.spec-row:last-child { border-bottom: none; }
+
+/* Typewriter indent aesthetic */
+.spec-key {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.spec-val {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink);
+  text-align: right;
+}
+
+/* Buttons in analog section */
+.composer-section--analog .btn-pill {
+  background: var(--surface);
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+}
+.composer-section--analog .btn-pill:hover {
+  background: var(--ochre);
+  color: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+.composer-section--analog .btn-pill--filled {
+  background: var(--terracotta);
+  color: var(--surface);
+}
+.composer-section--analog .btn-pill--filled:hover {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+   WHERE DEMO 1: stark border + hard text on dark.
+   HERE: soft shadow top-fade, mid-tone background,
+   feels like the back of a hardware manual or record sleeve.
+   ══════════════════════════════════════════════════════════════ */
+.site-footer {
+  padding: 24px 0;
+  background: var(--surface-2);
+  /* Soft shadow dissolves from above — no hard line */
+  box-shadow: 0 -4px 20px rgba(44, 37, 31, 0.07);
+}
+
+.footer-inner { flex-wrap: wrap; }
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  transition: color var(--transition);
+}
+.footer-link:hover { color: var(--terracotta); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(44, 37, 31, 0.08);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.footer-sub {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOAST NOTIFICATION
+   WHERE DEMO 1: dark stark surface, electric dot.
+   HERE: warm cream panel, terracotta dot — like a sticky note.
+   ══════════════════════════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast-msg {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideUp 0.3s ease forwards, fadeOut 0.3s 2.4s ease forwards;
+}
+
+.toast-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  flex-shrink: 0;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLLBAR — warm and subtle
+   ══════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-raised); }
+::-webkit-scrollbar-thumb { background: var(--ink-faint); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
+
+/* ══════════════════════════════════════════════════════════════
+   SELECTION — warm ochre highlight
+   ══════════════════════════════════════════════════════════════ */
+::selection {
+  background: var(--ochre);
+  color: var(--surface);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE OVERRIDES
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .filter-bar .ms-auto { margin-left: 0 !important; }
+  .composer-img-wrap { max-width: 200px; }
+  .spec-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .spec-val { text-align: left; }
+  .footer-inner { flex-direction: column; }
+  .footer-nav { flex-wrap: wrap; gap: 12px 16px; }
+}
